@@ -8,7 +8,6 @@ int main() {
     List1 list;
     List1 list2;
 
-
     list2.push_back(22);
     list2.push_back(23);
     list2.push_back(24);

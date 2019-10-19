@@ -11,15 +11,7 @@ List1::List1() : head(nullptr), current(nullptr), tail(nullptr) {
 }
 
 List1::~List1() {
-    if (!this->isEmpty()) {
-        Node *temp;
-
-        while (head) {
-            temp = head->next;
-            delete head;
-            head = temp;
-        }
-    }
+    clear();
 }
 
 void List1::push_back(int value) {
@@ -42,10 +34,9 @@ void List1::push_back(int value) {
 }
 
 void List1::push_back(List1 &list) {
-    tail->next = list.head;
-    tail = list.tail;
-    list.head = nullptr;
-    list.tail = nullptr;
+    for (size_t i = 0; i < list.get_size(); i++) {
+        push_back(list.at(i));
+    }
 }
 
 void List1::push_front(int value) {
@@ -68,13 +59,7 @@ void List1::push_front(int value) {
 
 void List1::pop_back() {
     if (this->isEmpty()) {
-        try {
-            throw std::runtime_error("There is nothing to delete");
-        }
-        catch (const std::runtime_error &) {
-            std::cerr << "There is nothing to delete" << std::endl;
-            exit(-1);
-        }
+        throw std::runtime_error("There is nothing to delete");
     }
 
     current = head;
@@ -97,13 +82,7 @@ void List1::pop_back() {
 
 void List1::pop_front() {
     if (this->isEmpty()) {
-        try {
-            throw std::runtime_error("There is nothing to delete");
-        }
-        catch (const std::runtime_error &) {
-            std::cerr << "There is nothing to delete" << std::endl;
-            exit(-1);
-        }
+        throw std::runtime_error("There is nothing to delete");
     }
 
     current = head->next;
@@ -134,28 +113,16 @@ void List1::insert(size_t indexOfElement, int value) {
             head = temp;
             head->value = value;
         }
-
-
     }
     catch (const std::bad_alloc &) {
         std::cerr << "Something bad happened with memory allocation " << std::endl;
-        exit(-1);
-    }
-    catch (const std::range_error &) {
-        std::cerr << "The index is out of range " << std::endl;
         exit(-1);
     }
 }
 
 int List1::at(size_t indexOfElement) {
     if (indexOfElement > this->get_size() - 1) {
-        try {
-            throw std::range_error("The index is out of range");
-        }
-        catch (const std::range_error &) {
-            std::cerr << "The index is out of range " << std::endl;
-            exit(-1);
-        }
+        throw std::range_error("The index is out of range");
     }
 
     int returnValue = 0;
@@ -173,13 +140,7 @@ int List1::at(size_t indexOfElement) {
 
 void List1::remove(size_t indexOfElement) {
     if (indexOfElement > this->get_size() - 1) {
-        try {
-            throw std::range_error("The index is out of range");
-        }
-        catch (const std::range_error &) {
-            std::cerr << "The index is out of range " << std::endl;
-            exit(-1);
-        }
+        throw std::range_error("The index is out of range");
     }
 
     current = head;
@@ -248,13 +209,7 @@ void List1::clear() noexcept {
 
 void List1::set(size_t indexOfElement, int value) {
     if (indexOfElement > this->get_size() - 1) {
-        try {
-            throw std::range_error("The index is out of range");
-        }
-        catch (const std::range_error &) {
-            std::cerr << "The index is out of range " << std::endl;
-            exit(-1);
-        }
+        throw std::range_error("The index is out of range");
     }
 
     current = head;
